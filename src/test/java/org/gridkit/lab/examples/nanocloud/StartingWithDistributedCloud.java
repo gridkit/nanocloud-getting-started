@@ -13,8 +13,8 @@ public class StartingWithDistributedCloud extends StartingWithLocalCloud {
 		// it could be done programaticaly but we will use config file in this example
 		cloud = CloudFactory.createSshCloud("resource:cbox-cluster.viconf");
 		
-		// In config we have used first segment of node name is used to map
-		// node to host.
+		// config (box-cluster.viconf) is using first segment of node name 
+		// for mapping of node node to hostname
 		cloud.node("cbox1.node1");
 		cloud.node("cbox2.node1");
 		
