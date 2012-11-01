@@ -26,6 +26,25 @@
     
     <dependencies>
 
+        <dependency>
+            <groupId>org.gridkit.lab</groupId>
+            <artifactId>telecontrol-ssh</artifactId>
+            <version>0.7.7-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
     
     <build>

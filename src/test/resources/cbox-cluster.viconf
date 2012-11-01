@@ -1,0 +1,19 @@
+
+# Use remote node type by default
+**: node:type=remote
+
+# Read SSH credentials for ssh-credetials.prop at user's home by default
+**: remote:ssh-credential-file=~/ssh-credentials.prop
+
+# Map node names to hosts
+# in this example mapping is hard coded
+cbox1.**: remote:host=cbox1
+cbox2.**: remote:host=cbox2
+cbox3.**: remote:host=cbox3
+cbox4.**: remote:host=cbox4
+
+# We should specify how to start java
+cbox?.**: remote:java-exec=/usr/bin/java
+
+# We also need to store cached jars somewhere
+cbox?.**: remote:jar-cache-path=/tmp/nanocloud
