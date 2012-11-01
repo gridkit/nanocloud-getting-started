@@ -21,13 +21,11 @@ public class StartingWithLocalCloud extends BaseCloudTest {
 		// so this line will not trigger any process creation
 		cloud.node("node1");
 		
-		sayHelloWorld(cloud);
-		
+		sayHelloWorld(cloud);		
 	}
 
 	@Test
 	public void test_hello_world__version2() {
-		// Let's create simple local cloud first
 		cloud = CloudFactory.createLocalCloud();
 
 		// let's create a few more nodes this time
