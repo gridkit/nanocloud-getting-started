@@ -10,7 +10,7 @@ public class StartingWithDistributedCloud extends StartingWithLocalCloud {
 	public void test_distributed_hello_world__version1() throws InterruptedException {
 		
 		// Using SSH for remote execution requires some configuration
-		// it could be done programaticaly but we will use config file in this example
+		// it could be done programmaticaly, but we will use config file in this example
 		cloud = CloudFactory.createSshCloud("resource:cbox-cluster.viconf");
 		
 		// config (box-cluster.viconf) is using first segment of node name 
