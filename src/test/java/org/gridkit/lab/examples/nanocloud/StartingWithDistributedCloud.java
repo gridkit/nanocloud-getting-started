@@ -36,5 +36,26 @@ public class StartingWithDistributedCloud extends StartingWithLocalCloud {
 		// give console output a chance to reach us from remote node
 		Thread.sleep(300);
 	}
+
+	// hiding @Test annotation
 	
+	@Override
+	public void test_hello_world__version1() {
+		super.test_hello_world__version1();
+	}
+
+	@Override
+	public void test_hello_world__version2() {
+		super.test_hello_world__version2();
+	}
+
+	@Override
+	public void test_hello_world__version3() throws InterruptedException {
+		super.test_hello_world__version3();
+	}
+
+	@Override
+	public void test_jvm_args__version1() throws InterruptedException {
+		super.test_jvm_args__version1();
+	}
 }
