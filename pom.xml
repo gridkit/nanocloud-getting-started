@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.gridkit.lab.examples</groupId>
-    <artifactId>nanocloud-getting-started-1</artifactId>
+    <artifactId>nanocloud-getting-started</artifactId>
     <version>0.1-SNAPSHOT</version>
 
-    <name>NanoCloud tutorial, part 1</name>
+    <name>NanoCloud: Getting started guide</name>
 
     <repositories>
         <!-- GridKit public maven repository -->
