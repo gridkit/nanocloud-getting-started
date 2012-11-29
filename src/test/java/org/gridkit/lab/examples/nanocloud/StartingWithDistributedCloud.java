@@ -15,7 +15,7 @@ public class StartingWithDistributedCloud extends BaseCloudTest {
 	public void test_distributed_hello_world__version1() throws InterruptedException {
 		
 		// Using SSH for remote execution requires some configuration
-		// it could be done programmaticaly, but we will use config file in this example
+		// it could be done programmatically, but we will use config file in this example
 		cloud = CloudFactory.createSshCloud("resource:cbox-cluster.viconf");
 		
 		// Our cloud config (box-cluster.viconf) is using first segment of node name 
@@ -29,7 +29,6 @@ public class StartingWithDistributedCloud extends BaseCloudTest {
 			.setRemoteHost("cbox1")
 			.setRemoteJavaExec("java")
 			.setRemoteJarCachePath("/tmp/extra");
-				
 		
 		// now we have 3 nodes configured to run across two servers
 		// let say them hello
@@ -46,7 +45,7 @@ public class StartingWithDistributedCloud extends BaseCloudTest {
 	public void test_distributed_hello_world__with_debug() throws InterruptedException {
 		
 		// Using SSH for remote execution requires some configuration
-		// it could be done programmaticaly, but we will use config file in this example
+		// it could be done programmatically, but we will use config file in this example
 		cloud = CloudFactory.createSshCloud("resource:cbox-cluster.viconf");
 		
 		// Our cloud config (box-cluster.viconf) is using first segment of node name 
@@ -61,8 +60,8 @@ public class StartingWithDistributedCloud extends BaseCloudTest {
 			.setRemoteJavaExec("java")
 			.setRemoteJarCachePath("/tmp/extra");
 				
-		// Now imagine that you want to debug one of slave processes
-		// if it could be run on your dev. box (no OS dependencies, etc)
+		// Now imagine, that you want to debug one of slave processes.
+		// If it could be run on your dev. box (no OS dependencies, etc),
 		// you could easy redirect on of slave node to run inside of master JVM.
 		// You can achieve this but using either in-process or isolate node type
 		ViProps.at(cloud.node("cbox1.node1")).setInProcessType();		
