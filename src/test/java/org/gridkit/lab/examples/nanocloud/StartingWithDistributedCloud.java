@@ -52,14 +52,7 @@ public class StartingWithDistributedCloud extends BaseCloudTest {
 		// for mapping of node node to hostname
 		cloud.node("cbox1.node1");
 		cloud.node("cbox2.node1");
-		
-		// Alternatively we could override configuration for particular node
-		// host, java command and jar cache path should be configured for node to start
-		RemoteNodeProps.at(cloud.node("extranode"))
-			.setRemoteHost("cbox1")
-			.setRemoteJavaExec("java")
-			.setRemoteJarCachePath("/tmp/extra");
-				
+						
 		// Now imagine, that you want to debug one of slave processes.
 		// If it could be run on your dev. box (no OS dependencies, etc),
 		// you could easy redirect on of slave node to run inside of master JVM.
@@ -70,6 +63,7 @@ public class StartingWithDistributedCloud extends BaseCloudTest {
 
 		allNodes.touch(); // warm up, equivalent to sending empty runnable
 		
+		System.out.println("Master JVM name is '" + ManagementFactory.getRuntimeMXBean().getName() + "'");
 		// you can set break point in runnable and catch cbox1.node1 executing it
 		// other vinodes are running as separate processes, so they out of reach
 		allNodes.exec(new Callable<Void>() {
