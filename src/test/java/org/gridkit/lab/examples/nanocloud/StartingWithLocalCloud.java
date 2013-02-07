@@ -1,15 +1,25 @@
 package org.gridkit.lab.examples.nanocloud;
 
 import org.gridkit.nanocloud.CloudFactory;
+import org.gridkit.vicluster.ViManager;
+import org.gridkit.vicluster.ViProps;
 import org.gridkit.vicluster.telecontrol.jvm.JvmProps;
 import org.junit.Test;
 
 public class StartingWithLocalCloud extends BaseCloudTest {
 
+	public ViManager createLocalCloud() {
+		ViManager cloud = CloudFactory.createCloud();
+		// this will configure "local" vi-node type by default
+		ViProps.at(cloud.node("**")).setLocalType();
+		return cloud;
+	}
+
+	
 	@Test
 	public void test_hello_world__version1() {
-		// Let's create simple local cloud first
-		cloud = CloudFactory.createLocalCloud();
+		// Let's create simple cloud where slaves will run on same box with master
+		cloud = createLocalCloud();
 		
 		// This line says that 'node1' should exists
 		// all initialization are lazy and asynchronous
@@ -21,7 +31,7 @@ public class StartingWithLocalCloud extends BaseCloudTest {
 
 	@Test
 	public void test_hello_world__version2() {
-		cloud = CloudFactory.createLocalCloud();
+		cloud = createLocalCloud();
 
 		// let's create a few more nodes this time
 		cloud.nodes("node1", "node2", "node3", "node4");
@@ -32,7 +42,7 @@ public class StartingWithLocalCloud extends BaseCloudTest {
 	@Test
 	public void test_hello_world__version3() throws InterruptedException {
 		// Let's create simple local cloud first
-		cloud = CloudFactory.createLocalCloud();
+		cloud = createLocalCloud();
 		
 		cloud.nodes("node1", "node2", "node3", "node4");
 		
@@ -50,7 +60,7 @@ public class StartingWithLocalCloud extends BaseCloudTest {
 
 	@Test
 	public void test_jvm_args__version1() throws InterruptedException {
-		cloud = CloudFactory.createLocalCloud();
+		cloud = createLocalCloud();
 		
 		// let's create a couple of node1
 		cloud.node("node1");

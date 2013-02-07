@@ -14,6 +14,7 @@ import junit.framework.Assert;
 
 import org.gridkit.nanocloud.CloudFactory;
 import org.gridkit.vicluster.ViNode;
+import org.gridkit.vicluster.ViProps;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +22,9 @@ public class BasicViNodeUsage extends BaseCloudTest {
 
 	@Before
 	public void prepareCloud() {
-		cloud = CloudFactory.createLocalCloud();
+		cloud = CloudFactory.createCloud();
+		// this will configure "local" vi-node type by default
+		ViProps.at(cloud.node("**")).setLocalType();
 	}
 	
 	@Test
@@ -29,11 +32,11 @@ public class BasicViNodeUsage extends BaseCloudTest {
 		
 		// ViNode interface may represent single node
 		// or group of nodes.
-		// Our cloud object provides us with reg. ex base selectors.
+		// Our cloud object provides us with wild card based selectors.
 
 		// let's declare couple of nodes
-		// if requested node name doesn't have wildcards
-		// node would be "materilized"
+		// if requested node name doesn't have wild cards
+		// node would be "materialized"
 		cloud.nodes("node1", "node1.1", "node1.1.1");
 		
 		// Two start will match every possible name
@@ -79,7 +82,7 @@ public class BasicViNodeUsage extends BaseCloudTest {
 
 	@Test
 	public void configuring_nodes() {
-		// Only "materialized" vinodes will participate in task execution.
+		// Only "materialized" vi-nodes will participate in task execution.
 		// All configuration applied to wild card selectors
 		// will be memorized and applied to newly materializing nodes.
 		
@@ -120,15 +123,15 @@ public class BasicViNodeUsage extends BaseCloudTest {
 	
 	@Test
 	public void executing_code() throws InterruptedException, ExecutionException {
-		// let's make 2 test vinodes
+		// let's make 2 test vi-nodes
 		cloud.nodes("node1", "node2");
 		
 		// ViNode has a bunch of methods for executing
 		// Runnable`s and Callable`s
-		// Instances of tasks should be either serializeabe
+		// Instances of tasks should be either serializable
 		// or anonymous classes (this is a special case added for convenience).
 		
-		// ViNode instance could be eigther single node or group
+		// ViNode instance could be either single node or a group
 		ViNode allNodes = cloud.node("**");
 
 		// exec() will invoke task synchronously (but in parallel across nodes)
@@ -143,12 +146,13 @@ public class BasicViNodeUsage extends BaseCloudTest {
 		allNodes.exec(new Hello());
 		
 	 
-		// Async invokation is supported too
+		// Asynchronous invocation is supported too
 		Future<Void> f = allNodes.submit(new Hello());
 		f.get();
 		
-		// mass* version of submit/exec allows to express our intent in multiple target
-		// execution
+		// mass* version of submit()/exec() allow you to express your intent 
+		// in multiple target execution.
+		// "mass" versions are different from "non-mass" version only in return types.
 		final List<String> pids = allNodes.massExec(new Callable<String>() {
 			@Override
 			public String call() throws Exception {
@@ -158,7 +162,7 @@ public class BasicViNodeUsage extends BaseCloudTest {
 		
 		System.err.println("Slave pids: " + pids);
 
-		// Non mass version could be used with group too
+		// Non-mass version could be used with groups too
 		// only one result will be returned.
 		final String randompid = allNodes.exec(new Callable<String>() {
 			@Override
