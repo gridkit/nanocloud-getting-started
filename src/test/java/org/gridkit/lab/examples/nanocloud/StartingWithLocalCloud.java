@@ -1,7 +1,11 @@
 package org.gridkit.lab.examples.nanocloud;
 
+import java.lang.management.ManagementFactory;
+import java.util.concurrent.Callable;
+
 import org.gridkit.nanocloud.CloudFactory;
 import org.gridkit.vicluster.ViManager;
+import org.gridkit.vicluster.ViNode;
 import org.gridkit.vicluster.ViProps;
 import org.gridkit.vicluster.telecontrol.jvm.JvmProps;
 import org.junit.Test;
@@ -26,7 +30,19 @@ public class StartingWithLocalCloud extends BaseCloudTest {
 		// so this line will not trigger any process creation
 		cloud.node("node1");
 		
-		sayHelloWorld(cloud);		
+		// two starts will match any node name
+		ViNode allNodes = cloud.node("**");
+		
+		// let our node to say hello
+		allNodes.exec(new Callable<Void>() {
+		
+			@Override
+			public Void call() throws Exception {
+				String jvmName = ManagementFactory.getRuntimeMXBean().getName();
+				System.out.println("My name is '" + jvmName + "'. Hello!");
+				return null;
+			}
+		});		
 	}
 
 	@Test
@@ -36,7 +52,16 @@ public class StartingWithLocalCloud extends BaseCloudTest {
 		// let's create a few more nodes this time
 		cloud.nodes("node1", "node2", "node3", "node4");
 		
-		sayHelloWorld(cloud);		
+		// say hello
+		cloud.node("**").exec(new Callable<Void>() {
+		
+			@Override
+			public Void call() throws Exception {
+				String jvmName = ManagementFactory.getRuntimeMXBean().getName();
+				System.out.println("My name is '" + jvmName + "'. Hello!");
+				return null;
+			}
+		});		
 	}
 
 	@Test
@@ -47,15 +72,24 @@ public class StartingWithLocalCloud extends BaseCloudTest {
 		cloud.nodes("node1", "node2", "node3", "node4");
 		
 		// let's make sure that all nodes are initialized
-		// before saying 'hello' this time
-		warmUp(cloud);
+		// before saying 'hello' this time.
+		// touch() will force nodes to be initialized.
+		cloud.node("**").touch();
 		
 		// Console output is pulled asynchronously so we have to give it
 		// few milliseconds to catch up.
 		Thread.sleep(300);
 		
 		// Now we should see quite good chorus
-		sayHelloWorld(cloud);			
+		cloud.node("**").exec(new Callable<Void>() {
+		
+			@Override
+			public Void call() throws Exception {
+				String jvmName = ManagementFactory.getRuntimeMXBean().getName();
+				System.out.println("My name is '" + jvmName + "'. Hello!");
+				return null;
+			}
+		});		
 	}
 
 	@Test
@@ -70,10 +104,9 @@ public class StartingWithLocalCloud extends BaseCloudTest {
 		JvmProps.at(cloud.node("node1")).addJvmArg("-Xms256m").addJvmArg("-Xmx256m");
 		JvmProps.at(cloud.node("node2")).addJvmArg("-Xms512m").addJvmArg("-Xmx512m");
 		
-		warmUp(cloud);
-		Thread.sleep(300);
+		cloud.node("**").touch();
 		
-		// Let's see how much memory is available to our childs
+		// Let's see how much memory is available to our slaves
 		reportMemory(cloud);			
 	}		
 }
