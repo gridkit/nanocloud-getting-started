@@ -28,6 +28,10 @@ public class StartingWithDistributedCloud extends BaseCloudTest {
 		cloud.node("cbox2");
 		cloud.node("cbox3");
 		
+		// Optionally you may want to specify java executable.
+		// Default value is "java", so if java is on your PATH you do not need to do it.
+		RemoteNodeProps.at(cloud.node("**")).setRemoteJavaExec("java");
+		
 		// now we have 3 nodes configured to run across two servers
 		// let them say hello
 		
