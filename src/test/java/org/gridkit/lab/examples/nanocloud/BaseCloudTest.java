@@ -3,14 +3,14 @@ package org.gridkit.lab.examples.nanocloud;
 import java.lang.management.ManagementFactory;
 import java.util.concurrent.Callable;
 
-import org.gridkit.vicluster.ViManager;
+import org.gridkit.nanocloud.Cloud;
 import org.gridkit.vicluster.ViNode;
 import org.gridkit.vicluster.ViNodeSet;
 import org.junit.After;
 
 public abstract class BaseCloudTest {
 
-	protected ViManager cloud;
+	protected Cloud cloud;
 
 	@After
 	public void recycleCloud() {
@@ -35,7 +35,7 @@ public abstract class BaseCloudTest {
 		});
 	}
 
-	protected void reportMemory(ViNodeSet cloud) {
+	protected void reportMemory(Cloud cloud) {
 		
 		// two starts will match any node name
 		ViNode allNodes = cloud.node("**");

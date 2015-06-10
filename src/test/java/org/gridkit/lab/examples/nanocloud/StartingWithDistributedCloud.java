@@ -4,6 +4,7 @@ import java.lang.management.ManagementFactory;
 import java.util.concurrent.Callable;
 
 import org.gridkit.nanocloud.CloudFactory;
+import org.gridkit.nanocloud.RemoteNode;
 import org.gridkit.vicluster.ViNode;
 import org.gridkit.vicluster.ViProps;
 import org.gridkit.vicluster.telecontrol.ssh.RemoteNodeProps;
@@ -19,14 +20,15 @@ public class StartingWithDistributedCloud extends BaseCloudTest {
 		// where node name is interpreted by hostname.
 		// If you do not have paswordless SSH to that node, 
 		// additional credentials configuration may be required.
-		cloud = CloudFactory.createSimpleSshCloud();
+		cloud = CloudFactory.createCloud();
+		RemoteNode.at(cloud.node("**")).useSimpleRemoting();
 		
 		// "cbox1" - "cbox3" are hostnames of VMs I'm using for testing.
 		// You can either put FDQN names of your servers below
 		// or use /etc/hosts to map these short names (as I do).
 		cloud.node("cbox1");
 		cloud.node("cbox2");
-		cloud.node("cbox3");
+//		cloud.node("cbox3");
 		
 		// Optionally you may want to specify java executable.
 		// Default value is "java", so if java is on your PATH you do not need to do it.
@@ -47,6 +49,7 @@ public class StartingWithDistributedCloud extends BaseCloudTest {
 			public Void call() throws Exception {
 				String jvmName = ManagementFactory.getRuntimeMXBean().getName();
 				System.out.println("My name is '" + jvmName + "'. Hello!");
+				Thread.sleep(60000);
 				return null;
 			}
 		});
@@ -60,7 +63,8 @@ public class StartingWithDistributedCloud extends BaseCloudTest {
 	public void test_distributed_hello_world__with_node_configuration_tweaking() throws InterruptedException {
 
 		// Continue to use simple SSH cloud
-		cloud = CloudFactory.createSimpleSshCloud();
+        cloud = CloudFactory.createCloud();
+        RemoteNode.at(cloud.node("**")).useSimpleRemoting();
 		
 		// "cbox1" - "cbox3" are hostnames of VMs I'm using for testing.
 		// You can either put FDQN names of your servers below
@@ -108,7 +112,8 @@ public class StartingWithDistributedCloud extends BaseCloudTest {
 	public void test_distributed_hello_world__with_debug() throws InterruptedException {
 		
 		// Let's create a SSH cloud as in our first example
-		cloud = CloudFactory.createSimpleSshCloud();
+        cloud = CloudFactory.createCloud();
+        RemoteNode.at(cloud.node("**")).useSimpleRemoting();
 		
 		cloud.node("cbox1");
 		cloud.node("cbox2");

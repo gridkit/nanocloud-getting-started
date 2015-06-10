@@ -3,8 +3,8 @@ package org.gridkit.lab.examples.nanocloud;
 import java.lang.management.ManagementFactory;
 import java.util.concurrent.Callable;
 
+import org.gridkit.nanocloud.Cloud;
 import org.gridkit.nanocloud.CloudFactory;
-import org.gridkit.vicluster.ViManager;
 import org.gridkit.vicluster.ViNode;
 import org.gridkit.vicluster.ViProps;
 import org.gridkit.vicluster.telecontrol.jvm.JvmProps;
@@ -12,8 +12,8 @@ import org.junit.Test;
 
 public class StartingWithLocalCloud extends BaseCloudTest {
 
-	public ViManager createLocalCloud() {
-		ViManager cloud = CloudFactory.createCloud();
+	public Cloud createLocalCloud() {
+		Cloud cloud = CloudFactory.createCloud();
 		// this will configure "local" vi-node type by default
 		ViProps.at(cloud.node("**")).setLocalType();
 		return cloud;
