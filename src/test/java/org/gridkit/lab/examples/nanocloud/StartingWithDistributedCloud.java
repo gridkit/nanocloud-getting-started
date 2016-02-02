@@ -28,7 +28,7 @@ public class StartingWithDistributedCloud extends BaseCloudTest {
 		// or use /etc/hosts to map these short names (as I do).
 		cloud.node("cbox1");
 		cloud.node("cbox2");
-//		cloud.node("cbox3");
+		cloud.node("cbox3");
 		
 		// Optionally you may want to specify java executable.
 		// Default value is "java", so if java is on your PATH you do not need to do it.
@@ -49,11 +49,11 @@ public class StartingWithDistributedCloud extends BaseCloudTest {
 			public Void call() throws Exception {
 				String jvmName = ManagementFactory.getRuntimeMXBean().getName();
 				System.out.println("My name is '" + jvmName + "'. Hello!");
-				Thread.sleep(60000);
+				Thread.sleep(10000);
 				return null;
 			}
 		});
-
+		
 		// Finally, we will give console output a chance to reach us from remote node.
 		// Console communications are asynchronous, so them may be delayed by few miliseconds. 
 		Thread.sleep(300);
@@ -122,7 +122,7 @@ public class StartingWithDistributedCloud extends BaseCloudTest {
 		// If it could be run on your desktop (no OS dependencies, etc),
 		// you could easy redirect one of slaves to run inside of master JVM.
 		// You can achieve this but using either in-process or isolate node type
-		ViProps.at(cloud.node("cbox1")).setInProcessType();		
+		ViProps.at(cloud.node("cbox1")).setIsolateType();		
 		
 		ViNode allNodes = cloud.node("**");
 

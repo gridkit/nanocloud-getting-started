@@ -8,28 +8,12 @@
 
     <name>NanoCloud: Getting started guide</name>
 
-    <repositories>
-        <!-- GridKit public maven repository -->
-        <repository>
-            <id>gridkit-releases</id>
-            <name>gridkit-repo.googlecode.com</name>
-            <url>http://gridkit.googlecode.com/svn/repo/</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-    
     <dependencies>
 
         <dependency>
             <groupId>org.gridkit.lab</groupId>
             <artifactId>telecontrol-ssh</artifactId>
-            <version>0.8.6</version>
+            <version>0.8.10</version>
         </dependency>
 
         <dependency>
